@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button } from './ui/button';
 import { readPrefs, writePrefs } from '../lib/storage';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from './ui/dropdown-menu';
+import { Button } from './ui/button';
 
 export const ThemeSwitcher: React.FC = () => {
   const [mode, setMode] = React.useState(readPrefs().theme);
@@ -12,11 +13,18 @@ export const ThemeSwitcher: React.FC = () => {
     writePrefs({ ...p, theme: val });
   };
   return (
-    <div className="flex gap-2">
-      <Button variant={mode === 'system' ? 'default' : 'outline'} onClick={() => setClass('system')}>System</Button>
-      <Button variant={mode === 'light' ? 'default' : 'outline'} onClick={() => setClass('light')}>Light</Button>
-      <Button variant={mode === 'dark' ? 'default' : 'outline'} onClick={() => setClass('dark')}>Dark</Button>
-    </div>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline">Theme: {mode}</Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel>Theme</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={() => setClass('system')}>System</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setClass('light')}>Light</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setClass('dark')}>Dark</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 
