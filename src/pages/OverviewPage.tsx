@@ -9,6 +9,7 @@ import { ThemeSwitcher } from '../components/ThemeSwitcher';
 import { EventDialog } from '../components/EventDialog';
 import { clearEvents, addEvent, listEvents, saveMany } from '../lib/events-repo';
 import { SettingsCommand } from '../components/SettingsCommand';
+import { Alert, AlertDescription, AlertTitle } from '../components/ui/alert';
 
 export const OverviewPage: React.FC = () => {
   const [events, setEvents] = React.useState<any[]>([]);
@@ -45,8 +46,8 @@ export const OverviewPage: React.FC = () => {
   }, [events, navigate]);
 
   return (
-    <div className="p-4 max-w-2xl mx-auto">
-      <div className="flex items-center justify-between mb-4">
+    <div className="p-6 max-w-3xl mx-auto space-y-4">
+      <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Overview</h1>
         <div className="flex gap-2 items-center">
           <ThemeSwitcher />
@@ -56,9 +57,16 @@ export const OverviewPage: React.FC = () => {
           <Button variant="outline" onClick={() => setOpenQR(true)}>QR</Button>
         </div>
       </div>
-      <div className="mt-3">
-        <EventDataTable data={events as any} onRowClick={(e) => navigate(`/event/${(e as any).id}`)} />
-      </div>
+      {events.length === 0 ? (
+        <Alert>
+          <AlertTitle>Keine Events</AlertTitle>
+          <AlertDescription>Für heute sind keine Events vorhanden. Nutze „Load Mock“, um Beispieltermine zu erzeugen.</AlertDescription>
+        </Alert>
+      ) : (
+        <div>
+          <EventDataTable data={events as any} onRowClick={(e) => navigate(`/event/${(e as any).id}`)} />
+        </div>
+      )}
       <SettingsCommand />
       <QRCodeModal open={openQR} onOpenChange={setOpenQR} />
       <EventDialog open={addOpen} onOpenChange={setAddOpen} onSubmit={async (e) => { await addEvent(e as any); setEvents((prev) => [...prev, e]); }} />

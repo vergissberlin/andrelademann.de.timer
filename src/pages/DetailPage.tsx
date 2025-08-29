@@ -4,6 +4,7 @@ import { TimerDisplay } from '../components/TimerDisplay';
 import { longBeep3s, shortBeep } from '../lib/audio';
 import { formatMmSs, secondsUntil } from '../lib/time';
 import { getEventById } from '../lib/events-repo';
+import { Alert, AlertDescription, AlertTitle } from '../components/ui/alert';
 
 export const DetailPage: React.FC = () => {
   const { id } = useParams();
@@ -46,12 +47,17 @@ export const DetailPage: React.FC = () => {
 
   const blink = remaining <= 60 && remaining > 0;
   return (
-    <div className="p-4 h-full flex flex-col items-center justify-center gap-4">
+    <div className="p-6 h-full flex flex-col items-center justify-center gap-4">
       <h1 className="text-2xl font-bold">{title}</h1>
       {untilStart !== null ? (
         <div className="text-sm opacity-70">Starts in {formatMmSs(untilStart)}</div>
-      ) : (
+      ) : remaining > 0 ? (
         <div className="text-sm opacity-70">{formatMmSs(remaining)} remaining</div>
+      ) : (
+        <Alert>
+          <AlertTitle>Beendet</AlertTitle>
+          <AlertDescription>Dieses Event ist beendet.</AlertDescription>
+        </Alert>
       )}
       <div className="w-full h-[60vh]">
         <TimerDisplay remainingSeconds={remaining} blink={blink} />
