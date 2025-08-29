@@ -6,13 +6,26 @@ import { Button } from '../components/ui/button';
 import { QRCodeModal } from '../components/QRCodeModal';
 import { ThemeSwitcher } from '../components/ThemeSwitcher';
 import { EventDialog } from '../components/EventDialog';
-import { clearEvents, addEvent } from '../lib/events-repo';
+import { clearEvents, addEvent, listEvents, saveMany } from '../lib/events-repo';
 
 export const OverviewPage: React.FC = () => {
-  const [events, setEvents] = React.useState(() => generateMockEvents());
+  const [events, setEvents] = React.useState<any[]>([]);
   const [openQR, setOpenQR] = React.useState(false);
   const navigate = useNavigate();
   const [addOpen, setAddOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    (async () => {
+      const existing = await listEvents();
+      if (existing.length === 0) {
+        const mocks = generateMockEvents();
+        await saveMany(mocks as any);
+        setEvents(mocks);
+      } else {
+        setEvents(existing);
+      }
+    })();
+  }, []);
 
   React.useEffect(() => {
     const id = setInterval(() => {
@@ -35,7 +48,7 @@ export const OverviewPage: React.FC = () => {
         <h1 className="text-2xl font-bold">Overview</h1>
         <div className="flex gap-2 items-center">
           <ThemeSwitcher />
-          <Button onClick={() => setEvents(generateMockEvents())}>Load Mock</Button>
+          <Button onClick={async () => { const mocks = generateMockEvents(); await clearEvents(); await saveMany(mocks as any); setEvents(mocks); }}>Load Mock</Button>
           <Button variant="outline" onClick={async () => { await clearEvents(); setEvents([]); }}>Delete Mock</Button>
           <Button variant="outline" onClick={() => setAddOpen(true)}>Add Event</Button>
           <Button variant="outline" onClick={() => setOpenQR(true)}>QR</Button>
