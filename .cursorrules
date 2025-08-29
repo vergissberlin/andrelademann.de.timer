@@ -1,0 +1,7 @@
+# Cursor Rules
+
+- When adding or updating a component in `src/components`, you MUST include:
+  - A corresponding unit test in the same change set
+  - A Storybook story documenting its states
+- Enforce strict TypeScript and ESLint. Fix all type errors before commit.
+- Use Conventional Commits.

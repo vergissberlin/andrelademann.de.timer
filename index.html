@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0ea5e9" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <title>Multi Event Timer</title>
+  </head>
+  <body class="min-h-screen bg-background text-foreground">
+    <script>
+      (function(){
+        if ('serviceWorker' in navigator && /localhost|127\.0\.0\.1/.test(location.hostname)) {
+          navigator.serviceWorker.getRegistrations && navigator.serviceWorker.getRegistrations().then(function(regs){
+            if (regs && regs.length) {
+              regs.forEach(function(r){ r.unregister(); });
+              caches && caches.keys && caches.keys().then(function(keys){ keys.forEach(function(k){ caches.delete(k); }); });
+            }
+          });
+        }
+      })();
+    </script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+  
+</html>
+

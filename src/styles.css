@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 222 47% 5%;
+  --foreground: 210 40% 98%;
+  --primary: 199 89% 48%;
+  --primary-foreground: 210 40% 98%;
+  --accent: 276 84% 62%;
+  --accent-foreground: 210 40% 98%;
+}
+
+.light {
+  --background: 0 0% 100%;
+  --foreground: 222 47% 11%;
+  --primary: 199 89% 48%;
+  --primary-foreground: 210 40% 98%;
+  --accent: 276 84% 62%;
+  --accent-foreground: 210 40% 98%;
+}
+
+html, body, #root { height: 100%; }
+body { font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, sans-serif; }
+
