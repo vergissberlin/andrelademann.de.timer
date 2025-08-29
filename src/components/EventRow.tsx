@@ -1,5 +1,6 @@
 import React from 'react';
 import type { EventDto } from '../schemas';
+import { Badge } from './ui/badge';
 
 export type EventStatus = 'upcoming' | 'running' | 'finished' | 'pause';
 
@@ -13,8 +14,7 @@ export function resolveStatus(e: EventDto, now = Date.now()): EventStatus {
 
 export const EventRow: React.FC<{ event: EventDto }> = ({ event }) => {
   const status = resolveStatus(event);
-  const badge =
-    status === 'upcoming' ? 'Anstehen' : status === 'running' ? 'Läuft' : 'Beendet';
+  const badge = status === 'upcoming' ? 'Anstehen' : status === 'running' ? 'Läuft' : 'Beendet';
   return (
     <div className={`flex items-center justify-between py-2 px-3 rounded-md ${
       status === 'running' ? 'bg-primary/10' : ''
@@ -27,7 +27,7 @@ export const EventRow: React.FC<{ event: EventDto }> = ({ event }) => {
           {Math.round(event.durationSeconds / 60)} min
         </div>
       </div>
-      <span className="text-xs px-2 py-1 rounded bg-foreground/10">{badge}</span>
+      <Badge>{badge}</Badge>
     </div>
   );
 };

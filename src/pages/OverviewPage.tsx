@@ -8,6 +8,7 @@ import { QRCodeModal } from '../components/QRCodeModal';
 import { ThemeSwitcher } from '../components/ThemeSwitcher';
 import { EventDialog } from '../components/EventDialog';
 import { clearEvents, addEvent, listEvents, saveMany } from '../lib/events-repo';
+import { SettingsCommand } from '../components/SettingsCommand';
 
 export const OverviewPage: React.FC = () => {
   const [events, setEvents] = React.useState<any[]>([]);
@@ -58,6 +59,7 @@ export const OverviewPage: React.FC = () => {
       <div className="mt-3">
         <EventDataTable data={events as any} onRowClick={(e) => navigate(`/event/${(e as any).id}`)} />
       </div>
+      <SettingsCommand />
       <QRCodeModal open={openQR} onOpenChange={setOpenQR} />
       <EventDialog open={addOpen} onOpenChange={setAddOpen} onSubmit={async (e) => { await addEvent(e as any); setEvents((prev) => [...prev, e]); }} />
     </div>
