@@ -15,10 +15,17 @@ if (prefs.theme === 'dark') {
   document.documentElement.classList.add('light');
 }
 
-const router = createBrowserRouter([
-  { path: '/', element: <OverviewPage /> },
-  { path: '/event/:id', element: <DetailPage /> },
-]);
+const router = createBrowserRouter(
+  [
+    { path: '/', element: <OverviewPage /> },
+    { path: '/event/:id', element: <DetailPage /> },
+  ],
+  {
+    future: {
+      v7_startTransition: true,
+    },
+  }
+);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
