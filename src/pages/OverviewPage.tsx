@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { generateMockEvents } from '../lib/mock';
 import { EventRow, resolveStatus } from '../components/EventRow';
+import { EventDataTable } from '../components/EventDataTable';
 import { Button } from '../components/ui/button';
 import { QRCodeModal } from '../components/QRCodeModal';
 import { ThemeSwitcher } from '../components/ThemeSwitcher';
@@ -54,12 +55,8 @@ export const OverviewPage: React.FC = () => {
           <Button variant="outline" onClick={() => setOpenQR(true)}>QR</Button>
         </div>
       </div>
-      <div className="space-y-2">
-        {events.map((e) => (
-          <Link key={e.id} to={`/event/${e.id}`}>
-            <EventRow event={{ ...e, id: '' }} />
-          </Link>
-        ))}
+      <div className="mt-3">
+        <EventDataTable data={events as any} onRowClick={(e) => navigate(`/event/${(e as any).id}`)} />
       </div>
       <QRCodeModal open={openQR} onOpenChange={setOpenQR} />
       <EventDialog open={addOpen} onOpenChange={setAddOpen} onSubmit={async (e) => { await addEvent(e as any); setEvents((prev) => [...prev, e]); }} />
