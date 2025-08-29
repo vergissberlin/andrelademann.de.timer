@@ -27,7 +27,7 @@ export const DetailPage: React.FC = () => {
   }, [navigate]);
 
   const blink = remaining <= 60 && remaining > 0;
-  const title = `Event ${id}`;
+  const title = `Event`;
   return (
     <div className="p-4 h-full flex flex-col items-center justify-center gap-4">
       <h1 className="text-2xl font-bold">{title}</h1>
