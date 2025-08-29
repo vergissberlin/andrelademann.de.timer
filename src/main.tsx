@@ -8,6 +8,7 @@ import { setupI18n } from './lib/i18n';
 import { readPrefs } from './lib/storage';
 import { OverviewPage } from './pages/OverviewPage';
 import { DetailPage } from './pages/DetailPage';
+import { registerServiceWorker } from './sw-register';
 
 const prefs = readPrefs();
 setupI18n(prefs.language);
@@ -27,4 +28,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <RouterProvider router={router} />
   </React.StrictMode>
 );
+
+registerServiceWorker();
 
